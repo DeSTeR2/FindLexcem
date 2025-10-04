@@ -1,16 +1,14 @@
 #include "LexcemDataType.h"
 
-LexcemDataType::LexcemDataType(std::string type, std::string filter, Color color)
+LexcemDataType::LexcemDataType(std::string type, std::regex regex, Color color)
 {
 	m_Type = type;
-	m_Filter = filter;
+	m_Regex = regex;
 	m_Color = color;
-
-	m_Regex = std::regex(m_Filter);
 }
 
 std::string LexcemDataType::GetType(){
-	return m_Filter;
+	return m_Type;
 }
 
 std::regex LexcemDataType::GetRegex()

@@ -128,7 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="ConfigParser.cpp" />
+    <ClCompile Include="ConfigProvider.cpp" />
     <ClCompile Include="ConsoleColor.cpp" />
     <ClCompile Include="FindLecsem.cpp" />
     <ClCompile Include="LexcemColorData.cpp" />
@@ -137,7 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
-    <ClInclude Include="ConfigParser.h" />
+    <ClInclude Include="ConfigProvider.h" />
     <ClInclude Include="ConsoleColor.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="LexcemColorData.h" />

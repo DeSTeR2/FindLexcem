@@ -58,15 +58,14 @@ static bool parse_color_component(const std::string& s, size_t& pos, char& key, 
     skip_ws(s, pos);
     if (pos >= s.size()) return false;
     // parse key (R,G,B)
-    if (s[pos] == '"' || std::isalpha(s[pos])) {
-        if (s[pos] == '"') ++pos;
+    if (s[pos] == '\'' || std::isalpha(s[pos])) {
+        if (s[pos] == '\'') ++pos;
         key = s[pos++];
-        if (s[pos] == '"') ++pos;
+        if (s[pos] == '\'') ++pos;
         skip_ws(s, pos);
         if (pos >= s.size() || s[pos] != ':') return false;
         ++pos;
         skip_ws(s, pos);
-        // parse number
         size_t start = pos;
         while (pos < s.size() && (std::isdigit(s[pos]) || s[pos] == '.' || s[pos] == 'e' || s[pos] == 'E' || s[pos] == '+' || s[pos] == '-')) ++pos;
         val = std::stof(s.substr(start, pos - start));
@@ -75,7 +74,6 @@ static bool parse_color_component(const std::string& s, size_t& pos, char& key, 
     return false;
 }
 
-// Parse top-level JSON objects in an array [ {...}, {...} ]
 static std::vector<std::string> extract_top_level_objects(const std::string& s) {
     std::vector<std::string> objs;
     size_t pos = 0;
@@ -107,26 +105,18 @@ static std::vector<std::string> extract_top_level_objects(const std::string& s) 
     return objs;
 }
 
-static bool extract_field(const std::string& obj, const std::string& key, std::string& value) {
-    size_t pos = 0;
-    std::string currentWord = "";
-    bool foundKey = false;
-    while (pos < obj.size()) {
-        if (obj[pos] == ' ' || obj[pos] == ':' || obj[pos] == '"') {
-            if (obj[pos] == ':') {
-                if (currentWord == key) {
-                    foundKey = true;
-                }
-
-                currentWord = "";
-            }
-        }
-        else
+static bool extract_field(const std::string& obj, const std::string& key, std::string& value, const std::vector<size_t>& quote_positions) {
+    bool key_found = false;
+    for (int i = 0; i < quote_positions.size(); i += 2) {
+        std::string sub_str = obj.substr(quote_positions[i] + 1, quote_positions[i + 1] - quote_positions[i] - 1);
+        if (key_found)
         {
-            currentWord += obj[pos];
+            value = sub_str;
+            return true;
         }
 
-        pos++;
+        if (sub_str == key)
+            key_found = true;
     }
     return false;
 }
@@ -154,23 +144,33 @@ std::unique_ptr<LexcemColorData> ConfigParser::parse(const std::string& fileName
     }
 
     for (const auto& obj : objects) {
-        std::string typeStr;
-        extract_field(obj, "Lecsem_type", typeStr);
+        std::vector<size_t> quote_positions;
 
-        std::string filterStr;
-        extract_field(obj, "Filter", filterStr);
-
-        float r = 0.0f, g = 0.0f, b = 0.0f;
-        size_t pos = 0;
-        while (pos < obj.size()) {
-            char key;
-            float val;
-            if (!parse_color_component(obj, pos, key, val)) break;
-            if (key == 'R') r = val;
-            else if (key == 'G') g = val;
-            else if (key == 'B') b = val;
+        for (size_t i = 0; i < obj.size(); ++i) {
+            if (obj[i] == '\'') {
+                quote_positions.push_back(i);
+            }
         }
 
+        std::string typeStr;
+        extract_field(obj, "Lecsem_type", typeStr, quote_positions);
+
+        std::string filterStr;
+        extract_field(obj, "Filter", filterStr, quote_positions);
+
+        float r = 0.0f, g = 0.0f, b = 0.0f;
+        std::string r_st;
+        std::string g_st;
+        std::string b_st;
+
+        extract_field(obj, "R", r_st, quote_positions);
+        extract_field(obj, "G", g_st, quote_positions);
+        extract_field(obj, "B", b_st, quote_positions);
+
+        r = std::stof(r_st);
+        g = std::stof(g_st);
+        b = std::stof(b_st);
+        
         if (typeStr.empty() && filterStr.empty()) continue;
 
         auto entry = std::make_unique<LexcemDataType>(typeStr, filterStr, Color(r, g, b));

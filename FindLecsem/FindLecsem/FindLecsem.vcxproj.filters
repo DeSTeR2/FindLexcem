@@ -30,10 +30,10 @@
     <ClCompile Include="LexsemDataType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConfigParser.cpp">
+    <ClCompile Include="LexcemColorData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LexcemColorData.cpp">
+    <ClCompile Include="ConfigProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,9 +42,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ResourceProvider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConfigParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LexcemDataType.h">
@@ -57,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LexcemColorData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
