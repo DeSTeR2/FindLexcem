@@ -27,7 +27,6 @@ int main() {
     int hexVal = 0xFF;    // hex
     double pi = 3.14159;
     double small = .25;
-    double expo = 1e-3;
 
     char ch = 'A';
     const char* s = "Hello, C++";

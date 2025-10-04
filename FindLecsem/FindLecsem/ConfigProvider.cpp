@@ -80,11 +80,11 @@ std::shared_ptr<std::vector<std::unique_ptr<LexcemDataType>>>& ConfigProvider::g
         Color(28, 120, 255)
     ));
 
-    data->push_back(std::make_unique<LexcemDataType>(
-        "Default",
-        std::regex(R"(.*)"),
-        Color(255, 255, 255)
-    ));
+    //data->push_back(std::make_unique<LexcemDataType>(
+    //    "Default",
+    //    std::regex(R"(.*)"),
+    //    Color(255, 255, 255)
+    //));
 
     return data;
 }

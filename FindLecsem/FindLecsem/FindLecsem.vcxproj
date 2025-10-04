@@ -143,6 +143,7 @@
     <ClInclude Include="LexcemColorData.h" />
     <ClInclude Include="LexcemDataType.h" />
     <ClInclude Include="ResourceProvider.h" />
+    <ClInclude Include="Token.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
