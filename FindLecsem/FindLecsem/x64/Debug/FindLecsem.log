@@ -1,0 +1,5 @@
+﻿  FindLecsem.cpp
+D:\Codes\C++\FindLecsem\FindLecsem\FindLecsem\ResourceProvider.h(8,14): warning C4091: 'static ': ignored on left of 'ResourceProvider' when no variable is declared
+  (compiling source file 'FindLecsem.cpp')
+  
+  FindLecsem.vcxproj -> D:\Codes\C++\FindLecsem\FindLecsem\x64\Debug\FindLecsem.exe
